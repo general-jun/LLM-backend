@@ -3,7 +3,8 @@ namespace kr.sap.demo.llm;
 using { cuid, managed } from '@sap/cds/common';
 
 /**
- * 대화명
+ * Table: KR_SAP_DEMO_LLM_CONVERSATION
+ * Description: 대화 정보
  */
 entity Conversation {
     key cID : UUID not null;
@@ -15,7 +16,8 @@ entity Conversation {
 }
 
 /**
- * 대화 메시지
+ * Table: KR_SAP_DEMO_LLM_MESSAGE
+ * Description: 대화 메시지
  */
 entity Message {
     key cID: Association to Conversation;
@@ -27,7 +29,7 @@ entity Message {
 
 /**
  * Table: KR_SAP_DEMO_LLM_FILES
- * Description: 사용자가 업로드한 파일의 정보 및 Binary data
+ * Description: 사용자가 업로드한 파일의 정보 및 Binary
  */
 entity Files: cuid, managed {
     @Core.MediaType: mediaType @Core.ContentDisposition.Filename: fileName
@@ -40,7 +42,7 @@ entity Files: cuid, managed {
 
 /**
  * Table: KR_SAP_DEMO_LLM_DOCUMENTCHUNK
- * Description: 사용자가 업로드한 파일에 대한 Chunk 및 Vector data
+ * Description: 사용자가 업로드한 파일에 대한 Chunk 및 Vector
  */
 entity DocumentChunk: cuid {
     text_chunk: LargeString;
