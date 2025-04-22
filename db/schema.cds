@@ -52,7 +52,7 @@ entity DocumentChunk: cuid {
 
 /**
  * Table: KR_SAP_DEMO_LLM_SCRAPCHUNK
- * Description: SAP Community(Technology - Q&A, Blogs)에서 Scrapping한 정보 및 Vector data
+ * Description: SAP Community(Technology - Q&A, Blogs)에서 Scrapping한 정보 및 Vector
  */
  entity ScrapChunk: cuid {
     key checksum: String;
