@@ -1,0 +1,10 @@
+# 파일
+db/.env
+.cdsrc-private.json
+.cdsrc.json
+
+# 폴더
+.vscode/
+gen/
+mta_archives/
+node_modules/

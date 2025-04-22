@@ -1,0 +1,55 @@
+_schema-version: 3.3.0
+ID: llm-srv
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: llm-odata-service
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: llm-xsuaa-service
+  - name: cross-container-service-1
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    instances: 1
+  build-parameters:
+    builder: npm-ci
+    ignore:
+    - node_modules/
+- name: llm-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: cross-container-service-1
+    group: SERVICE_REPLACEMENTS
+    properties:
+      key: ServiceName_1
+      service: ~{the-service-name}
+resources:
+- name: llm-xsuaa-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: llm-auth-app
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: cross-container-service-1
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service-name: llm-db
+  properties:
+    the-service-name: ${service-name}
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

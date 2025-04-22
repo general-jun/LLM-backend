@@ -1,0 +1,7 @@
+{
+  "xsappname": "llm-auth-app",
+  "tenant-mode": "dedicated",
+  "scopes": [],
+  "attributes": [],
+  "role-templates": []
+}
