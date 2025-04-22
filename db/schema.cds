@@ -64,6 +64,7 @@ entity DocumentChunk: cuid {
     author: String;
     views: Int16;
     comments: Int16;
+    is_solved: Boolean;
     embedded: Boolean default false;
     embedding: Vector(1536)
  }
