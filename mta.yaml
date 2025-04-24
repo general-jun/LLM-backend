@@ -1,6 +1,6 @@
 _schema-version: 3.3.0
 ID: llm-backend
-description: Knowledge Management and Chat Service Using RAG and SAP AI Core
+description: Knowledge Management and Chat Service Using SAP AI Core
 version: 1.0.0
 parameters:
   enable-parallel-deployments: true
@@ -8,25 +8,25 @@ build-parameters:
   before-all:
   - builder: custom
     commands:
-    - npm ci
-    - npx cds build --production
+      - npm ci
+      - npx cds build --production
 
 
-########################################
+#######################################################################
 # - Deploy Location 
 #   Subaccount -> Space -> Applications
-########################################
 modules:
-# OData servcie Application
+#----------------------------------------------------------------------
+# Description > OData servcie
 - name: llm-backend-app
   type: nodejs
   path: gen/srv
   requires:
-  - name: llm-xsuaa-app
-  - name: llm-db-rc
+    - name: llm-db-svc
+    - name: llm-xsuaa-svc
   provides:
-  - name: srv-api
-    properties:
+    - name: srv-api
+  properties:
       srv-url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
@@ -34,38 +34,41 @@ modules:
   build-parameters:
     builder: npm-ci
     ignore:
-    - node_modules/
-# Database Object Deploy Application
+      - node_modules/
+#----------------------------------------------------------------------
+# Description > Database deployer
 - name: llm-deployer-app
   type: hdb
   path: gen/db
   requires:
-  - name: llm-db-rc
-    group: SERVICE_REPLACEMENTS
-    properties:
-      key: ServiceName_1
-      service: ~{the-service-name}
+    - name: llm-db-svc
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    ignore:
+      - node_modules/
 
 
-#############################################
+#######################################################################
 # - Deploy Location
 #   Subaccount -> Space -> Service Instances
-#############################################
 resources:
-# Managed Approuter Application
-- name: llm-xsuaa-app
+#----------------------------------------------------------------------
+# Type > Managed Approuter
+- name: llm-xsuaa-svc
   type: org.cloudfoundry.managed-service
   parameters:
+    service: xsuaa
+    service-plan: application
+    path: ./xs-security.json
     config:
       tenant-mode: dedicated
       xsappname: llm-auth-app
-    path: ./xs-security.json
-    service: xsuaa
-    service-plan: application
-# HDI Container Service
-- name: llm-db-rc
-  type: org.cloudfoundry.existing-service
+
+#----------------------------------------------------------------------
+# Type > HDI Container
+- name: llm-db-svc
+  type: com.sap.xs.hdi-container
   parameters:
-    service-name: llm-db-svc
-  properties:
-    the-service-name: ${service-name}
+    service: hana
+    service-plan: hdi-shared

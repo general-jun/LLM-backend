@@ -1,42 +1,43 @@
 {
-  "name": "LLM-backend",
-  "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
-  "license": "UNLICENSED",
-  "private": true,
-  "dependencies": {
-    "@cap-js/hana": "^1",
-    "@sap-cloud-sdk/http-client": "^4.0.2",
-    "@sap/cds": "^8",
-    "@sap/xssec": "^4",
-    "basic-auth": "^2.0.1",
-    "cap-llm-plugin": "^1.5.0",
-    "cds-swagger-ui-express": "^0.10.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
-    "downloadjs": "^1.4.7",
-    "express": "^4",
-    "langchain": "^0.1.19",
-    "pdf-lib": "^1.17.1",
-    "pdf-parse": "^1.1.1",
-    "pdfkit": "^0.17.0",
-    "uuid": "^11.1.0"
-  },
-  "devDependencies": {
-    "@cap-js/cds-types": "^0.10.0",
-    "@cap-js/sqlite": "^1",
-    "@sap/cds-dk": "^8"
-  },
-  "scripts": {
-    "start": "cds-serve"
-  },
-  "cds": {
-    "requires": {
-      "auth": "xsuaa"
-    },
-    "sql": {
-      "native_hana_associations": false
-    }
-  }
+	"name": "llm-backend",
+	"version": "1.0.0",
+	"description": "SAP AI Core Demo",
+	"repository": "https://github.com/general-jun/LLM-backend",
+	"private": true,
+	"dependencies": {
+		"@cap-js/hana": "^1",
+		"@sap-cloud-sdk/http-client": "^4.0.2",
+		"@sap/cds": "^8",
+		"@sap/xssec": "^4",
+		"basic-auth": "^2.0.1",
+		"cap-llm-plugin": "^1.5.0",
+		"cds-swagger-ui-express": "^0.10.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.5.0",
+		"downloadjs": "^1.4.7",
+		"express": "^4",
+		"langchain": "^0.1.19",
+		"pdf-lib": "^1.17.1",
+		"pdf-parse": "^1.1.1",
+		"pdfkit": "^0.17.0",
+		"uuid": "^11.1.0"
+	},
+	"devDependencies": {
+		"@cap-js/cds-types": "^0.10.0",
+		"@sap/cds-dk": "^8"
+	},
+	"scripts": {
+		"start": "cds watch --profile hybrid",
+		"build": "rimraf mta_archives && mbt build --mtar archive",
+		"deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+		"undeploy": "cf undeploy llm-backend --delete-services --delete-service-keys --delete-service-brokers"
+	},
+	"cds": {
+		"requires": {
+			"auth": "xsuaa"
+		},
+		"sql": {
+			"native_hana_associations": false
+		}
+	}
 }
