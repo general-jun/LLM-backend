@@ -2,6 +2,7 @@
 db/.env
 .cdsrc-private.json
 .cdsrc.json
+package-lock.json
 
 # 폴더
 .vscode/
