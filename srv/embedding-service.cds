@@ -1,10 +1,15 @@
 using { kr.sap.demo.llm as db } from '../db/schema';
 
+/**
+ * 
+ */
 service EmbeddingService @(requires: 'authenticated-user') {
-    entity DocumentChunk as projection on db.DocumentChunk
-        excluding {
-            embedding
-        };
+    /**
+     * - Files
+     *   
+     * - DocumentChunk
+     *   
+     */
     entity Files @(restrict: [{
         grant: [
             'READ',
@@ -13,8 +18,21 @@ service EmbeddingService @(requires: 'authenticated-user') {
             'DELETE'
         ],
         where: 'createdBy = $user'
-        }]) as projection on db.Files;
+    }]) as projection on db.Files;
+    entity DocumentChunk as projection on db.DocumentChunk
+        excluding {
+            embedding
+        };
 
-  action storeEmbeddings(uuid : String) returns String;
-  function deleteEmbeddings() returns String;
+    /**
+     * - Description
+     *   
+     */
+    action storeEmbeddings(uuid: String) returns String;
+
+    /**
+     * - Description
+     *   
+     */
+    function deleteEmbeddings() returns String;
 }

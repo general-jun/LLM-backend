@@ -3,11 +3,13 @@ namespace kr.sap.demo.llm;
 using { cuid, managed } from '@sap/cds/common';
 
 /**
- * Table: KR_SAP_DEMO_LLM_CONVERSATION
- * Description: 대화 정보
+ * - Table
+ *   KR_SAP_DEMO_LLM_CONVERSATION
+ * - Description
+ *   대화 정보
  */
 entity Conversation {
-    key cID : UUID not null;
+    key cID: UUID not null;
     userID: String;
     creation_time: Timestamp;
     last_update_time: Timestamp;
@@ -16,8 +18,10 @@ entity Conversation {
 }
 
 /**
- * Table: KR_SAP_DEMO_LLM_MESSAGE
- * Description: 대화 메시지
+ * - Table
+ *   KR_SAP_DEMO_LLM_MESSAGE
+ * - Description
+ *   대화 메시지
  */
 entity Message {
     key cID: Association to Conversation;
@@ -28,8 +32,10 @@ entity Message {
 }
 
 /**
- * Table: KR_SAP_DEMO_LLM_FILES
- * Description: 사용자가 업로드한 파일의 정보 및 Binary
+ * - Table
+ *   KR_SAP_DEMO_LLM_FILES
+ * - Description
+ *   사용자가 업로드한 파일의 정보 및 Binary
  */
 entity Files: cuid, managed {
     @Core.MediaType: mediaType
@@ -42,8 +48,10 @@ entity Files: cuid, managed {
 }
 
 /**
- * Table: KR_SAP_DEMO_LLM_DOCUMENTCHUNK
- * Description: 사용자가 업로드한 파일에 대한 Chunk 및 Vector
+ * - Table
+ *   KR_SAP_DEMO_LLM_DOCUMENTCHUNK
+ * - Description
+ *   사용자가 업로드한 파일에 대한 Chunk 및 Vector
  */
 entity DocumentChunk: cuid {
     text_chunk: LargeString;
@@ -52,8 +60,10 @@ entity DocumentChunk: cuid {
 }
 
 /**
- * Table: KR_SAP_DEMO_LLM_SITELIST
- * Description: Scrapping 사이트
+ * - Table
+ *   KR_SAP_DEMO_LLM_SITELIST
+ * - Description
+ *   Scrapping 사이트
  */
 entity SiteList {
     key url_code: String not null;
@@ -62,8 +72,10 @@ entity SiteList {
 }
 
 /**
- * Table: KR_SAP_DEMO_LLM_SCRAPCHUNK
- * Description: Scrapping 데이터
+ * - Table
+ *   KR_SAP_DEMO_LLM_SCRAPCHUNK
+ * - Description
+ *   Scrapping 데이터
  */
  entity ScrapChunk {
     key url_code: String not null;
