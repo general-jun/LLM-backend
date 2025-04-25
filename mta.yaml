@@ -30,7 +30,8 @@ modules:
       srv-url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
-    instances: 1
+    disk-quota: 1024M
+    memory: 512M
   build-parameters:
     builder: npm-ci
     ignore:
