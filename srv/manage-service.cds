@@ -1,6 +1,12 @@
 using { kr.sap.demo.llm as db } from '../db/schema';
 
 service ManageService @(requires: 'authenticated-user') {
+    
+    /**
+     * 
+     */
+    entity SiteList as projection on db.SiteList;
+    
     /**
      * 
      */
@@ -9,9 +15,4 @@ service ManageService @(requires: 'authenticated-user') {
         excluding {
             embedding
         };
-
-    /**
-     * 
-     */
-    function invokeScraping(urlCode: String) returns Boolean;
 }

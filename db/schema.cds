@@ -32,7 +32,8 @@ entity Message {
  * Description: 사용자가 업로드한 파일의 정보 및 Binary
  */
 entity Files: cuid, managed {
-    @Core.MediaType: mediaType @Core.ContentDisposition.Filename: fileName
+    @Core.MediaType: mediaType
+    @Core.ContentDisposition.Filename: fileName
     content: LargeBinary;
     @Core.IsMediaType: true
     mediaType: String;
@@ -51,20 +52,25 @@ entity DocumentChunk: cuid {
 }
 
 /**
- * Table: KR_SAP_DEMO_LLM_SCRAPCHUNK
- * Description: SAP Community(Technology - Q&A, Blogs)에서 Scrapping한 정보 및 Vector
+ * Table: KR_SAP_DEMO_LLM_SITELIST
+ * Description: Scrapping 사이트
  */
- entity ScrapChunk: cuid {
-    key checksum: String;
-    key tag: String;
-    title: String;
+entity SiteList {
+    key url_code: String not null;
+    description: String;
     url: String;
-    summary: String;
-    posted_date: String;
-    author: String;
-    views: Int16;
-    comments: Int16;
-    is_solved: Boolean;
+}
+
+/**
+ * Table: KR_SAP_DEMO_LLM_SCRAPCHUNK
+ * Description: Scrapping 데이터
+ */
+ entity ScrapChunk {
+    key url_code: String not null;
+    key checksum: String not null;
+    title: LargeString;
+    posted_date: Date;
+    content: LargeString;
     embedded: Boolean default false;
     embedding: Vector(1536)
  }
